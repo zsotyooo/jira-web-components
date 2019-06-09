@@ -4,6 +4,9 @@ Web component library for JIRA.
 
 Currently under development. Please keep in mind that it will change later.
 
+## Teaser
+![Screen capture](https://raw.githubusercontent.com/zsotyooo/jira-web-components/master/public/screencapture.png)
+
 ## Get started
 
 Install package...
