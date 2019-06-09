@@ -7,7 +7,7 @@ Currently under development. Please keep in mind that it will change later.
 ## Teaser
 ![Screen capture](https://raw.githubusercontent.com/zsotyooo/jira-web-components/master/public/screencapture.png)
 
-## Get started
+## Getting started
 
 Install package...
 
@@ -15,7 +15,12 @@ Install package...
 npm install jira-web-components --save
 ```
 
-Or use it from CDN...
+```js
+import "jira-web-components";
+```
+
+Or use a `script` tag...
+
 ```html
 <script src="https://unpkg.com/jira-web-components@0.4.0/public/bundle.js"></script>
 ```
@@ -23,7 +28,8 @@ Or use it from CDN...
 In order to be able to communicate with JIRA you need a CORS proxy server.
 Please go to [cors-anywhere](https://www.npmjs.com/package/cors-anywhere) for more information.
 
-Example which can be hosted on heroku:
+Example server (optimised for hosting on heroku):
+
 ```js
 // server.js
 const host = process.env.HOST || '127.0.0.1';
@@ -59,7 +65,22 @@ corsAnywhere.createServer({
   console.log('Running CORS proxy on ' + host + ':' + port);
 });
 ```
-## Usage
+
+Or clone this repo, and look for the `server.js` in the project root.
+
+Once you have the server script:
+
+```bash
+#!/bin/bash
+export HOST=cors.my-website.com
+export PORT=8080
+export CORSANYWHERE_WHITELIST=https://my-website.com,http://my-website.com,http://test.my-website.com
+node server.js
+```
+
+For testing only you can also use: `https://cors-anywhere.herokuapp.com`
+
+## Usaging the Components
 
 ### Config
 
@@ -126,7 +147,7 @@ Example:
 
 #### Auth
 
-You can handle the authentication vith this component.
+You can handle the authentication using this component.
 
 ```html
 <jira-auth></jira-auth>
