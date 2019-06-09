@@ -111,7 +111,7 @@
             <label class="label" for="jira-url">URL to JiRa</label>
             <div class="control">
               <input bind:value={url} id="jira-url" name="jira-url" type="text" placeholder="URL to JiRa" class="input is-medium" required="">
-              <p class="help">Use the URL to your company JiRa account (E.g: https://your-company.jira.net).</p>
+              <p class="help">Use the URL to your company JiRa account (E.g: https://your-company.atlassian.net).</p>
             </div>
           </div>
         </fieldset>
