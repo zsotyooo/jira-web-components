@@ -1,6 +1,10 @@
 {
   "name": "jira-web-components",
-  "version": "1.0.0",
+  "version": "0.0.1",
+  "description": "A web component library for JiRa",
+  "module": "public/bundle.js",
+  "main": "public/bundle.js",
+  "unpkg": "public/bundle.js",
   "devDependencies": {
     "cors-anywhere": "^0.4.1",
     "npm-run-all": "^4.1.5",
@@ -21,7 +25,21 @@
     "start:dev": "sirv public --dev",
     "start:proxy": "node server.js"
   },
-  "dependencies": {
-    "@gluon/font-awesome": "^1.0.0"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zsotyooo/jira-web-components.git"
+  },
+  "keywords": [
+    "jira",
+    "jira-api",
+    "web-component",
+    "custom-element",
+    "svelte"
+  ],
+  "author": "Zsolt Molnar <zsotyooo@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zsotyooo/jira-web-components/issues"
+  },
+  "homepage": "https://github.com/zsotyooo/jira-web-components#readme"
 }
