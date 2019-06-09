@@ -57,8 +57,8 @@
   });
 </script>
 
-<style>
-  @import "bulma.css";
+<style lang="sass">
+  @import "node_modules/bulma/bulma";
 </style>
 
 <svelte:options tag="jira-auth-form" />

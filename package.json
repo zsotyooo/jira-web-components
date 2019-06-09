@@ -6,7 +6,9 @@
   "main": "public/bundle.js",
   "unpkg": "public/bundle.js",
   "devDependencies": {
+    "bulma": "^0.7.5",
     "cors-anywhere": "^0.4.1",
+    "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
     "rollup": "^1.10.1",
     "rollup-plugin-commonjs": "^9.3.4",
@@ -15,7 +17,8 @@
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^4.0.4",
     "sirv-cli": "^0.4.0",
-    "svelte": "^3.0.0"
+    "svelte": "^3.0.0",
+    "svelte-preprocess-sass": "^0.2.0"
   },
   "scripts": {
     "build": "rollup -c",
