@@ -14,7 +14,7 @@ npm install jira-web-components --save
 
 Or use it from CDN...
 ```html
-
+<script src="https://unpkg.com/jira-web-components@0.3.0/public/bundle.js"></script>
 ```
 
 In order to be able to communicate with JIRA you need a CORS proxy server.
