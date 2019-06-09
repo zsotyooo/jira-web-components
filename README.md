@@ -80,7 +80,7 @@ node server.js
 
 For testing only you can also use: `https://cors-anywhere.herokuapp.com`
 
-## Usaging the Components
+## Using the Components
 
 ### Config
 
