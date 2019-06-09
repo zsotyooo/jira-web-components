@@ -87,10 +87,10 @@ These components render actual content (see functional components later).
 <jira-auth-user-card></jira-auth-user-card>
 ```
 
-#### Inline issue ticket
+#### Inline issue tag
 
 ```html
-<jira-issue key="EX-123"></jira-issue>
+<jira-issue-tag key="EX-123"></jira-issue-tag>
 ```
 
 #### Text wrapper
@@ -124,7 +124,7 @@ Example:
 </script>
 ```
 
-### Auth
+#### Auth
 
 You can handle the authentication vith this component.
 
@@ -151,7 +151,21 @@ Events:
 * `'jira-auth-apikey-changed'`: {detail: `string`}
 * `'jira-auth-url-changed'`: {detail: `string`}
 
-Made with Love and [svelte](https://svelte.dev/)
+#### Issue
+
+You can get info about an issue by using this component.
+
+```html
+<jira-issue key="EX-123"></jira-issue>
+```
+
+Events:
+
+* `'jira-issue-loaded'`: {detail: `object`}
+
+---
+
+Made with :heart: and [![svelte](https://raw.githubusercontent.com/zsotyooo/jira-web-components/master/public/favicon.png)](https://svelte.dev/).
 
 ## License
 
