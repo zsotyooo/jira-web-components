@@ -114,6 +114,23 @@ These components render actual content (see functional components later).
 <jira-issue-tag key="EX-123"></jira-issue-tag>
 ```
 
+#### Project Card
+
+```html
+<jira-project-card key="EX"></jira-project-card>
+```
+
+### Project Dropdown
+
+```html
+<jira-project-select key="EX"></jira-project-select>
+```
+
+Events:
+
+* `'jira-project-selected'`: {detail: `object`}
+
+
 #### Text wrapper
 
 Replaces the `[JIRA:EX-123]` issue ticket codes with `<jira-issue>` components.
@@ -136,12 +153,14 @@ Example:
 <!-- ... -->
 <script>
   var auth = document.getElementById('jira-auth');
-  auth.$on('jira-auth-status-changed', function(e){
-    console.log(e.detail === true ? 'You are logged in.' : 'You are logged out');
+  addEventListener('DOMContentLoaded', function() {
+    auth.$on('jira-auth-status-changed', function(e){
+      console.log(e.detail === true ? 'You are logged in.' : 'You are logged out');
+    });
+    auth.setEmail('me@my-company.com');
+    auth.setApiKey('[MY_API_KEY_FOR_JIRA]');
+    auth.setUrl('https://my-company.atlassian.net');
   });
-  auth.setEmail('me@my-company.com');
-  auth.setApiKey('[MY_API_KEY_FOR_JIRA]');
-  auth.setUrl('https://my-company.atlassian.net');
 </script>
 ```
 
@@ -154,6 +173,7 @@ You can handle the authentication using this component.
 ```
 
 Methods:
+
 * `setEmail` = (v: `string`) => `void`;
 * `setApiKey` = (v: `string`) => `void`;
 * `setUrl` = (v: `string`) => `void`;
@@ -165,6 +185,7 @@ Methods:
 * `reset` = () => `void`;
 
 Events:
+
 * `'jira-auth-user-changed'`: {detail: `object`}
 * `'jira-auth-user-fetching-changed'`: {detail: `boolean`} - It's true when the data is being fetched from the API.
 * `'jira-auth-status-changed'`: {detail: `boolean`}
@@ -183,6 +204,24 @@ You can get info about an issue by using this component.
 Events:
 
 * `'jira-issue-loaded'`: {detail: `object`}
+
+#### Projects
+
+You can get the all available projects.
+
+```html
+<jira-projects></jira-projects>
+```
+
+Methods:
+
+* `fetchProjects` = async () => Promise<`array`>;
+
+Events:
+
+* `'jira-projects-loaded'`: {detail: `array`}
+* `'jira-projects-changed'`: {detail: `array`}
+* `'jira-projects-fetching-changed'`: {detail: `boolean`}
 
 ## Styleguide, examples and detailed documentation:
 

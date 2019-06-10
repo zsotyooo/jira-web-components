@@ -7,6 +7,14 @@
 
   export let key = '';
 
+  const prevKey = '';
+
+  $: {
+    if (key && prevKey !== key) {
+      issuePool.addByKey(key);
+    }
+  }
+
   let issue = emptyIssue;
 
   const load = () => {
@@ -25,11 +33,6 @@
       issue = emptyIssue;
       dispatch('jira-issue-loaded', issue);
     }
-  });
-
-  onMount(async () => {
-    await tick();
-    issuePool.addByKey(key);
   });
 </script>
 

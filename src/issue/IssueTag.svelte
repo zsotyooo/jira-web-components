@@ -1,9 +1,12 @@
 <script>
+  import { url as baseUrl } from '../auth/store.js';
   import Issue from './Issue.svelte';
 
   export let key = '';
 
   let issue;
+
+  $: url = $baseUrl + '/browse/' + key;
 
   function onIssueLoaded(e) {
     issue = e.detail;
@@ -18,7 +21,7 @@
 
 <Issue {key} on:jira-issue-loaded={onIssueLoaded} />
 <a
-  href={issue ? issue.url : '#'}
+  href={url}
   target="_blank"
   class="tag is-rounded"
   class:is-warning={issue && issue.id}>

@@ -1,0 +1,12 @@
+<jira-project-select id="jira-project-select"></jira-project-select>
+
+<script>
+  var projectSelect = document.getElementById('jira-project-select');
+
+  addEventListener('DOMContentLoaded', function() {
+    projectSelect.$on('jira-project-selected', function (e) {
+      console.log(e.detail)
+    });
+  });
+  
+</script>

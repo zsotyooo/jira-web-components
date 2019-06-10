@@ -32,3 +32,18 @@ export const fetchApi = async (url) => {
     return Promise.reject(error);
   }
 }
+
+export const fetchAllPages = async (url, max = 50) => {
+  let isLast = false;
+  let startAt = 0;
+  let maxResult = max;
+  const ret = [];
+  while (!isLast) {
+    let res = await fetchApi(url.replace('%start%', startAt).replace('%max%', maxResult));
+    isLast = res.isLast;
+    maxResult = res.maxResult;
+    startAt = res.startAt + maxResult;
+    ret.push(res);
+  }
+  return Promise.resolve(ret);
+}
