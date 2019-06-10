@@ -153,18 +153,41 @@
 <div class="Browser-panel Browser-code is-active" data-role="tab-panel" id="browser-4a9e8c762f5e1c26d484bacdd9fe7be8-panel-html">
     <code class="Code Code--lang-html">
         
-        <pre><span class="hljs-tag">&lt;<span class="hljs-name">jira-global-config</span> <span class="hljs-attr">cors</span>=<span class="hljs-string">"https://cors-anywhere.herokuapp.com"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-global-config</span>&gt;</span>
+        <pre><span class="hljs-tag">&lt;<span class="hljs-name">jira-global-config</span> <span class="hljs-attr">cors</span>=<span class="hljs-string">"https://cors-anywhere.herokuapp.com"</span> <span class="hljs-attr">secret</span>=<span class="hljs-string">"myuseridhashed"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-global-config</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">jira-auth-user-card</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-auth-user-card</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">jira-auth-form</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-auth-form</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box container is-fluid"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">jira-project-select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"jira-project-select"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-project-select</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+        <span class="hljs-keyword">var</span> projectSelect = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'jira-project-select'</span>);
+        addEventListener(<span class="hljs-string">'DOMContentLoaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            projectSelect.$on(<span class="hljs-string">'jira-project-selected'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+                <span class="hljs-built_in">console</span>.log(e.detail)
+            });
+        });
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">jira-project-card</span> <span class="hljs-attr">key</span>=<span class="hljs-string">""</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"jira-project-card"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-project-card</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+        addEventListener(<span class="hljs-string">'DOMContentLoaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            <span class="hljs-keyword">var</span> projectSelect = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'jira-project-select'</span>);
+            projectSelect.$on(<span class="hljs-string">'jira-project-selected'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+                <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'jira-project-card'</span>).setAttribute(<span class="hljs-string">'key'</span>, e.detail.key);
+            });
+        });
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box container is-fluid"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span>Ticket:<span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">jira-issue-tag</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"REISS-30"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-issue-tag</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span>Description:<span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">jira-text-wrapper</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Lorem ipsum [JIRA:KITT-128] dolor sit [JIRA:PD-120] amet<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
@@ -185,11 +208,24 @@
 <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span>
 </span><span class="hljs-template-tag">{% <span class="hljs-name">render</span> '<a href="auth-form.html">@auth-form</a>' %}</span><span class="xml">
 <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box container is-fluid"</span>&gt;</span>
+  </span><span class="hljs-template-tag">{% <span class="hljs-name">render</span> '<a href="project-select.html">@project-select</a>' %}</span><span class="xml">
+  <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span>
+  </span><span class="hljs-template-tag">{% <span class="hljs-name">render</span> '<a href="project-card.html">@project-card</a>', { key: ''} %}</span><span class="xml">
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+    addEventListener(<span class="hljs-string">'DOMContentLoaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">var</span> projectSelect = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'jira-project-select'</span>);
+      projectSelect.$on(<span class="hljs-string">'jira-project-selected'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+        <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'jira-project-card'</span>).setAttribute(<span class="hljs-string">'key'</span>, e.detail.key);
+      });
+    });
+  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"box container is-fluid"</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span>Ticket:<span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span>
   </span><span class="hljs-template-tag">{% <span class="hljs-name">render</span> '<a href="issue-tag.html">@issue-tag</a>' %}</span><span class="xml">
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span>
   <span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span>Description:<span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>
   </span><span class="hljs-template-tag">{% <span class="hljs-name">render</span> '<a href="text-wrapper.html">@text-wrapper</a>' %}</span><span class="xml">
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
@@ -249,7 +285,7 @@
         </li>
         
         <li class="Meta-item">
-            <strong class="Meta-key">References <em class="Meta-count">(5)</em>:</strong>
+            <strong class="Meta-key">References <em class="Meta-count">(7)</em>:</strong>
             <span class="Meta-value Meta-value--linkList">
             
                 <a href="config.html">@<span>config</span></a>, 
@@ -257,6 +293,10 @@
                 <a href="auth-user-card.html">@<span>auth-user-card</span></a>, 
             
                 <a href="auth-form.html">@<span>auth-form</span></a>, 
+            
+                <a href="project-select.html">@<span>project-select</span></a>, 
+            
+                <a href="project-card.html">@<span>project-card</span></a>, 
             
                 <a href="issue-tag.html">@<span>issue-tag</span></a>, 
             

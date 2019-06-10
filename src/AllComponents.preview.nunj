@@ -3,11 +3,24 @@
 <hr>
 {% render '@auth-form' %}
 <hr>
-<div>
+<div class="box container is-fluid">
+  {% render '@project-select' %}
+  <hr>
+  {% render '@project-card', { key: ''} %}
+  <script>
+    addEventListener('DOMContentLoaded', function() {
+      var projectSelect = document.getElementById('jira-project-select');
+      projectSelect.$on('jira-project-selected', function (e) {
+        document.getElementById('jira-project-card').setAttribute('key', e.detail.key);
+      });
+    });
+  </script>
+</div>
+<hr>
+<div class="box container is-fluid">
   <strong>Ticket:</strong>
   {% render '@issue-tag' %}
-</div>
-<div>
+  <hr>
   <strong>Description:</strong><br>
   {% render '@text-wrapper' %}
 </div>

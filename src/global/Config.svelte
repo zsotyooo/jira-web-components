@@ -1,14 +1,19 @@
 <script>
   import { onMount, tick } from'svelte';
-  import { hydrateData } from '../utils/storage.js';
+  import { corsUrl, userSecret } from './store.js';
 
   export let cors = null;
-
   const prevCors = null;
 
+  export let secret = null;
+  const prevSecret = null;
+
   $: {
-    if (cors && prevCors !== cors) {
-      hydrateData('cors', cors);  
+    if (cors !== null && prevCors !== cors) {
+      corsUrl.set(cors);
+    }
+    if (secret !== null && prevSecret !== secret) {
+      userSecret.set(secret);
     }
   }
 </script>

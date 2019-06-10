@@ -1,29 +1,25 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import Projects from './Projects.svelte';
+  import { isAuthenticated } from '../auth/store.js';
+  import { projectPool, projectsAreFetchig } from './store.js';
 
   const dispatch = createEventDispatcher();
 
-  let project = null;
-  let projects = [];
-  let fetching = false;
+  projectPool.fetchAll();
+
+  isAuthenticated.subscribe(v => {
+    if (v) {
+      projectPool.fetchAll();      
+    }
+  });
 
   export let getProject = () => project;
 
-  const onProjectsLoaded = (e) => {
-    projects = e.detail;
-  }
-
-  const onFetchingChanged = (e) => {
-    fetching = e.detail;
-  }
-
   const onSelect = (e) => {
     const key = e.target.value;
-    if (!key) {
-      project = null;
-    } else {
-      project = projects.find(p => p.key === key);  
+    let project = null;
+    if (key) {
+      project = projectPool.getByKey(key);
     }
     dispatch('jira-project-selected', project);
   }
@@ -42,18 +38,16 @@
 
 <svelte:options tag="jira-project-select" />
 
-<Projects
-  on:jira-projects-loaded={onProjectsLoaded}
-  on:jira-projects-fetching-changed={onFetchingChanged} />
-
-<div class="control jira-project-select">
+<div class="control jira-project-select container is-fluid">
   <div class="select"
-    class:is-loading={fetching} >
+    class:is-loading={$projectsAreFetchig} >
     <select on:change={onSelect}>
       <option value="">Please select project</option>
-      {#each projects as { id, key, name }, i}
-        <option value={key}>{key}: { name}</option>
-      {/each}
+      {#if $projectPool}
+        {#each $projectPool as { id, key, name }, i}
+          <option value={key}>{key}: { name}</option>
+        {/each}
+      {/if}
     </select>
   </div>
 </div>

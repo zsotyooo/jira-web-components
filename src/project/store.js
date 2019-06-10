@@ -1,5 +1,6 @@
 import { writable, get } from 'svelte/store';
 import { fetchAllPages, tick } from '../utils/api.js';
+import { isAuthenticated } from '../auth/store.js';
 
 const fetchProjects = async () => {
   await tick(100);
@@ -17,10 +18,9 @@ const fetchProjects = async () => {
         url: self.replace(/\/rest\/(.*)/,'') + `/browse/${key}`,
         data: _project,
       };
-      projectPool.add(project);
       return project;
     });
-
+    projectPool.set(projects);
     return Promise.resolve(projects);
 
   } catch(error) {
@@ -50,10 +50,14 @@ export const projectPool = (() => {
     fetchAll: async () => {
       return await fetchProjects();
     },
-    add: (project) => update(pool => {
-      return addToPool(pool, project);
-    }),
+    set: (pool) => set(pool),
     reset: () => set([]),
     getByKey: (key) => get(projectPool).find(_project => _project.key === key),
   };
 })();
+
+isAuthenticated.subscribe((v) => {
+  if (!v) {
+    projectPool.reset();
+  }
+});

@@ -1,17 +1,44 @@
 
 
-<jira-global-config cors="https://cors-anywhere.herokuapp.com"></jira-global-config>
+<jira-global-config
+  cors="https://cors-anywhere.herokuapp.com"
+  secret="myuseridhashed"></jira-global-config>
 <jira-auth-user-card></jira-auth-user-card>
 
 <hr>
 <jira-auth-form></jira-auth-form>
 
 <hr>
-<div>
+<div class="box container is-fluid">
+  <jira-project-select id="jira-project-select"></jira-project-select>
+
+<script>
+  var projectSelect = document.getElementById('jira-project-select');
+
+  addEventListener('DOMContentLoaded', function() {
+    projectSelect.$on('jira-project-selected', function (e) {
+      console.log(e.detail)
+    });
+  });
+  
+</script>
+  <hr>
+  <jira-project-card key="" id="jira-project-card"></jira-project-card>
+
+  <script>
+    addEventListener('DOMContentLoaded', function() {
+      var projectSelect = document.getElementById('jira-project-select');
+      projectSelect.$on('jira-project-selected', function (e) {
+        document.getElementById('jira-project-card').setAttribute('key', e.detail.key);
+      });
+    });
+  </script>
+</div>
+<hr>
+<div class="box container is-fluid">
   <strong>Ticket:</strong>
   <jira-issue-tag key="REISS-30"></jira-issue-tag>
-</div>
-<div>
+  <hr>
   <strong>Description:</strong><br>
   <jira-text-wrapper>
   <p>Lorem ipsum [JIRA:KITT-128] dolor sit [JIRA:PD-120] amet</p>

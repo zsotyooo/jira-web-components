@@ -5,6 +5,7 @@ import { createSavedStoreFor } from '../utils/storage.js';
 const fetchAuthUser = async () => {
   await tick(100);
   if (!get(authUserIsFetching)) {
+    authUser.set(emptyUser);
     authUserIsFetching.set(true);
     try {
       const { accountId, key, name, emailAddress, displayName, avatarUrls } = await fetchApi('/rest/api/3/myself');

@@ -153,22 +153,20 @@
 <div class="Browser-panel Browser-code is-active" data-role="tab-panel" id="browser-6c47d6b3125b6850df82919384ead702-panel-html">
     <code class="Code Code--lang-html">
         
-        <pre><span class="hljs-tag">&lt;<span class="hljs-name">jira-project</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"jira-projects"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-projects</span>&gt;</span>
+        <pre><span class="hljs-tag">&lt;<span class="hljs-name">jira-projects</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"jira-projects"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-projects</span>&gt;</span>
 
-    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+    addEventListener(<span class="hljs-string">'DOMContentLoaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
         <span class="hljs-keyword">var</span> projects = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'jira-projects'</span>);
-        addEventListener(<span class="hljs-string">'DOMContentLoaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-            projects.$on(<span class="hljs-string">'jira-projects-changed'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
-                <span class="hljs-built_in">console</span>.log(e.detail)
-            });
-            projects.$on(<span class="hljs-string">'jira-projects-loaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
-                <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'loaded'</span>, e.detail);
-            });
-            projects.$on(<span class="hljs-string">'jira-projects-fetching-changed'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
-                <span class="hljs-built_in">console</span>.log(e.detail);
-            });
+        <span class="hljs-built_in">console</span>.log(projects);
+        projects.$on(<span class="hljs-string">'jira-projects-changed'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+            <span class="hljs-built_in">console</span>.log(e.detail)
         });
-    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></pre>
+        projects.$on(<span class="hljs-string">'jira-projects-fetching-changed'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{
+            <span class="hljs-built_in">console</span>.log(e.detail);
+        });
+    });
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></pre>
         
     </code>
 </div>
@@ -176,19 +174,15 @@
     
     <div class="Browser-panel Browser-code" data-role="tab-panel" id="browser-6c47d6b3125b6850df82919384ead702-panel-view">
     <code class="Code Code--lang-text">
-        <pre><span class="hljs-tag">&lt;<span class="hljs-name">jira-project</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"jira-projects"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-projects</span>&gt;</span>
+        <pre><span class="hljs-tag">&lt;<span class="hljs-name">jira-projects</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"jira-projects"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-projects</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
-  <span class="hljs-keyword">var</span> projects = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'jira-projects'</span>);
-
   addEventListener(<span class="hljs-string">'DOMContentLoaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> projects = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'jira-projects'</span>);
+    <span class="hljs-built_in">console</span>.log(projects);
     
     projects.$on(<span class="hljs-string">'jira-projects-changed'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
       <span class="hljs-built_in">console</span>.log(e.detail)
-    });
-
-    projects.$on(<span class="hljs-string">'jira-projects-loaded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
-      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'loaded'</span>, e.detail);
     });
 
     projects.$on(<span class="hljs-string">'jira-projects-fetching-changed'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{

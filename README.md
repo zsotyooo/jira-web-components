@@ -120,7 +120,7 @@ These components render actual content (see functional components later).
 <jira-project-card key="EX"></jira-project-card>
 ```
 
-### Project Dropdown
+#### Project Dropdown
 
 ```html
 <jira-project-select key="EX"></jira-project-select>
@@ -216,6 +216,7 @@ You can get the all available projects.
 Methods:
 
 * `fetchProjects` = async () => Promise<`array`>;
+* `getProjects` = () => `array`;
 
 Events:
 

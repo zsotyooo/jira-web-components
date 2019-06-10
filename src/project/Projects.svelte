@@ -1,13 +1,16 @@
 <script>
   import { createEventDispatcher, onMount, tick } from 'svelte';
+  import { get } from 'svelte/store';
+  import { isAuthenticated } from '../auth/store.js';
   import { projectPool, projectsAreFetchig } from './store.js';
   const dispatch = createEventDispatcher();
 
   export let fetchProjects = async () => {
     const data = await projectPool.fetchAll();
-    dispatch('jira-projects-loaded', data);
     return data;
   };
+
+  export let getProjects = get(projectPool);
 
   projectPool.subscribe((v) => {
     dispatch('jira-projects-changed', v);
@@ -17,9 +20,10 @@
     dispatch('jira-projects-fetching-changed', v);
   });
 
-  onMount(async () => {
-    await tick();
-    fetchProjects();
+  isAuthenticated.subscribe((v) => {
+    if (v) {
+      fetchProjects();
+    }
   });
 </script>
 

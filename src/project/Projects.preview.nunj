@@ -1,16 +1,12 @@
-<jira-project id="jira-projects"></jira-projects>
+<jira-projects id="jira-projects"></jira-projects>
 
 <script>
-  var projects = document.getElementById('jira-projects');
-
   addEventListener('DOMContentLoaded', function() {
+    var projects = document.getElementById('jira-projects');
+    console.log(projects);
     
     projects.$on('jira-projects-changed', function (e) {
       console.log(e.detail)
-    });
-
-    projects.$on('jira-projects-loaded', function (e) {
-      console.log('loaded', e.detail);
     });
 
     projects.$on('jira-projects-fetching-changed', function (e) {

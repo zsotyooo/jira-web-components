@@ -1,3 +1,5 @@
+import { get } from 'svelte/store';
+import { corsUrl } from '../global/store.js';
 import { readData } from './storage.js';
 
 const getHeaders = () => ({
@@ -9,8 +11,8 @@ const getHeaders = () => ({
 export const tick = async (time) => (new Promise((resolve, reject) => { setTimeout(resolve, time); }));
 
 export const fetchApi = async (url) => {
-  const corsUrl = readData('cors');
-  if (!corsUrl) {
+  const cUrl = get(corsUrl);
+  if (!cUrl) {
     return Promise.reject('No CORS server URL specified!');
   }
   const baseUrl = readData('url');
@@ -18,16 +20,12 @@ export const fetchApi = async (url) => {
     return Promise.reject('No URL specified!');
   }
   try {
-    const rawResponse = await fetch(`${corsUrl}/${baseUrl}${url}`, {
+    const rawResponse = await fetch(`${cUrl}/${baseUrl}${url}`, {
       method: 'GET',
       headers: getHeaders()
     });
-    try {
-      const content = await rawResponse.json();
-      return content;
-    } catch(error) {
-      return Promise.reject(error);
-    }
+    const content = await rawResponse.json();
+    return Promise.resolve(content);
   } catch(error) {
     return Promise.reject(error);
   }
