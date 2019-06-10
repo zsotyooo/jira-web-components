@@ -1,0 +1,63 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel='stylesheet' href='../../global.css'>
+  <link rel='stylesheet' href='../../bundle.css'>
+  <title>Preview Layout</title>
+</head>
+<body>
+  <jira-global-config cors="https://cors-anywhere.herokuapp.com"></jira-global-config>
+
+  <jira-auth id="jira-auth"></jira-auth>
+
+<hr>
+<form onsubmit="return false">
+  <div>
+    <label>Email:</label>
+    <input type="email" id="email" value="">
+  </div>
+  <div>
+    <label>Api key:</label>
+    <input type="password" id="apiKey" value="">
+  </div>
+  <div>
+    <label>URL:</label>
+    <input type="text" id="url" value="">
+  </div>
+  <div>
+    <button onclick="authenticate()">Save</button>
+  </div>
+</form>
+<hr>
+
+<script>
+  var auth = document.getElementById('jira-auth');
+
+  window.onload = () => {
+    auth.$on('jira-auth-user-changed', function(e) { console.log(e.detail) });
+    auth.$on('jira-auth-user-fetching-changed', function(e) {console.log(e.detail); });
+    auth.$on('jira-auth-status-changed', function(e) { console.log(e.detail) });
+    auth.$on('jira-auth-email-changed', function(e) { console.log(e.detail) });
+    auth.$on('jira-auth-apikey-changed', function(e) { console.log(e.detail) });
+    auth.$on('jira-auth-url-changed', function(e) { console.log(e.detail) });
+    
+    document.getElementById('email').value = auth.getEmail();
+    document.getElementById('apiKey').value = auth.getApiKey();
+    document.getElementById('url').value = auth.getUrl();
+  };
+  
+
+  var authenticate = () => {
+    auth.setEmail(document.getElementById('email').value);
+    auth.setApiKey(document.getElementById('apiKey').value);
+    auth.setUrl(document.getElementById('url').value);
+    return false;
+  }
+</script>
+  
+  <script type="text/javascript" src="../../bundle.js"></script>
+</body>
+</html>

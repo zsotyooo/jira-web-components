@@ -6,6 +6,8 @@
   "main": "public/bundle.js",
   "unpkg": "public/bundle.js",
   "devDependencies": {
+    "@frctl/fractal": "^1.1.7",
+    "@frctl/nunjucks": "^1.0.3",
     "bulma": "^0.7.5",
     "cors-anywhere": "^0.4.1",
     "node-sass": "^4.12.0",
@@ -21,12 +23,13 @@
     "svelte-preprocess-sass": "^0.2.0"
   },
   "scripts": {
-    "build": "rollup -c",
-    "autobuild": "rollup -c -w",
-    "dev": "run-p start:proxy start:dev autobuild",
-    "start": "sirv public",
-    "start:dev": "sirv public --dev",
-    "start:proxy": "node server.js"
+    "build": "run-s build:rollup build:fractal",
+    "dev": "run-p start:proxy start:rollup start:fractal",
+    "start:proxy": "node server.js",
+    "start:fractal": "fractal start --sync",
+    "start:rollup": "rollup -c -w",
+    "build:fractal": "fractal build",
+    "build:rollup": "rollup -c"
   },
   "repository": {
     "type": "git",

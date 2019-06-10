@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset='utf8'>
+	<meta name='viewport' content='width=device-width'>
+
+	<title>Svelte app</title>
+
+	<link rel='icon' type='image/png' href='favicon.png'>
+	<link rel='stylesheet' href='global.css'>
+	<link rel='stylesheet' href='bundle.css'>
+</head>
+
+<body>
+  <jira-global-styles></jira-global-styles>
+
+  <jira-global-config cors="http://localhost:4444"></jira-global-config>
+  
+  <jira-auth></jira-auth>
+  
+  <jira-auth-user-card></jira-auth-user-card>
+  
+  <jira-auth-form></jira-auth-form>
+  
+  <hr />
+  <jira-issue-tag key="PD-120"></jira-issue-tag>
+  <hr />
+
+  <jira-text-wrapper>
+    <p>Lorem ipsum [JIRA:KITT-128] dolor sit [JIRA:PD-120] amet</p>
+  </jira-text-wrapper>
+
+	<script src='bundle.js'></script>
+</body>
+</html>

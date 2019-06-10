@@ -136,7 +136,7 @@ Example:
 <!-- ... -->
 <script>
   var auth = document.getElementById('jira-auth');
-  auth.addEventListener('jira-auth-status-changed', function(e){
+  auth.$on('jira-auth-status-changed', function(e){
     console.log(e.detail === true ? 'You are logged in.' : 'You are logged out');
   });
   auth.setEmail('me@my-company.com');
