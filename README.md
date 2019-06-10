@@ -22,7 +22,7 @@ import "jira-web-components";
 Or use a `script` tag...
 
 ```html
-<script src="https://unpkg.com/jira-web-components@0.4.0/public/bundle.js"></script>
+<script src="https://unpkg.com/jira-web-components@0.5.0/public/bundle.js"></script>
 ```
 
 In order to be able to communicate with JIRA you need a CORS proxy server.
