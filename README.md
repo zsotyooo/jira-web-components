@@ -184,6 +184,10 @@ Events:
 
 * `'jira-issue-loaded'`: {detail: `object`}
 
+## Styleguide, examples and detailed documentation:
+
+Click here for the [documentation and examples](https://zsotyooo.github.io/jira-web-components/)!
+
 ---
 
 Made with :heart: and [![svelte](https://raw.githubusercontent.com/zsotyooo/jira-web-components/master/public/favicon.png)](https://svelte.dev/).
