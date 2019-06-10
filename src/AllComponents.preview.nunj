@@ -1,0 +1,14 @@
+{% render '@config' %}
+{% render '@auth-user-card' %}
+<hr>
+{% render '@auth-form' %}
+<hr>
+<div>
+  <strong>Ticket:</strong>
+  {% render '@issue-tag' %}
+</div>
+<div>
+  <strong>Description:</strong><br>
+  {% render '@text-wrapper' %}
+</div>
+<hr>
