@@ -1,35 +1,42 @@
 <script>
-  import { createEventDispatcher, onMount, afterUpdate, tick } from 'svelte';
-  import { get } from 'svelte/store';
-  import { isAuthenticated } from '../auth/store.js';
-  import { projectPool, projectsAreFetchig } from './store.js';
+  import { createWatcher } from '../utils/helpers.js';
+  import Projects from './Projects.svelte';
 
   export let key;
-  const prevKey = null;
+  const watchKey = createWatcher(key);
 
-  const dispatch = createEventDispatcher();
+  let projectsComponent;
 
-  let project = null;
-  
-  export let getProject = () => project;
+  let project;
+  const watchProject = createWatcher(project);
+  let projectData;
+  let isFetching = false;
 
-  projectPool.subscribe(pool => {
-    project = projectPool.getByKey(key);
-  });
-
-  isAuthenticated.subscribe(v => {
-    if(!v) {
-      project = null;
+  function onProjectsLoaded() {
+    if (!project || project.key !== key) {
+      project = projectsComponent.getProject(key);
     }
-  });
+  };
+
+  function onFetchingChanged({ detail }) {
+    isFetching = detail;
+  };
 
   $: {
-    if (key && prevKey !== key) {
-      project = projectPool.getByKey(key);
-      if (!project) {
-        projectPool.fetchAll();
+    watchKey.onChanged(key, () => {
+      if (key) {
+        project = projectsComponent.getProject(key);
       }
-    }
+    });
+    watchProject.onChanged(project, () => {
+      if (project) {
+        project.subscribe(p => {
+          projectData = p;
+        });
+      } else {
+        projectData = null;
+      }
+    });
   }
 </script>
 
@@ -39,30 +46,34 @@
 
 <svelte:options tag="jira-project-card" />
 
+<Projects 
+  bind:this={projectsComponent}
+  on:jira-projects-loaded={onProjectsLoaded}
+  on:jira-projects-fetching-changed={onFetchingChanged}/>
 {#if key}
-  {#if $projectsAreFetchig }
+  {#if isFetching }
     <p class="box container is-fluid notification is-warning">
       <button class="button is-warning is-loading is-small"></button>
     </p>
-  {:else if project}
-  <div class="box container is-fluid is-info notification">
-    <article class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img src={project.avatarUrl} alt="Image">
-        </figure>
-      </div>
-      <div class="media-content">
-        <div class="content">
-          <p>
-            <strong>{project.key}</strong> <small>({project.isPrivite ? 'private' : 'public'})</small>
-            <br>
-            <small><a href={project.url} target="_href">{project.name}</small>
-          </p>
+  {:else if projectData}
+    <div class="box container is-fluid is-info notification">
+      <article class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img src={projectData.avatarUrl} alt="Image">
+          </figure>
         </div>
-      </div>
-    </article>
-  </div>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong>{projectData.key}</strong> <small>({projectData.isPrivite ? 'private' : 'public'})</small>
+              <br>
+              <small><a href={projectData.url} target="_href">{projectData.name}</small>
+            </p>
+          </div>
+        </div>
+      </article>
+    </div>
   {:else}
     <div class="notification is-warning">
       {key} project not found or you have no permission to see it!

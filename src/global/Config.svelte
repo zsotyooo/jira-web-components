@@ -1,20 +1,26 @@
 <script>
   import { onMount, tick } from'svelte';
   import { corsUrl, userSecret } from './store.js';
+  import { createWatcher } from '../utils/helpers.js';
 
   export let cors = null;
-  const prevCors = null;
-
   export let secret = null;
-  const prevSecret = null;
+
+  const watchCors = createWatcher(cors);
+  const watchSecret = createWatcher(secret);
 
   $: {
-    if (cors !== null && prevCors !== cors) {
-      corsUrl.set(cors);
-    }
-    if (secret !== null && prevSecret !== secret) {
-      userSecret.set(secret);
-    }
+    watchCors.onChanged(cors, () => {
+      if (cors !== null) {
+        corsUrl.set(cors);
+      }
+    });
+    
+    watchSecret.onChanged(secret, () => {
+      if (secret !== null) {
+        userSecret.set(secret);
+      }
+    });
   }
 </script>
 

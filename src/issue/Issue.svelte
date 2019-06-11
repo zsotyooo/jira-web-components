@@ -1,39 +1,28 @@
 <script>
   import { createEventDispatcher, onMount, tick } from 'svelte';
-  import { issuePool, emptyIssue } from './store.js';
-  import { isAuthenticated } from '../auth/store.js';
+  import { issuePool } from './store.js';
+  import { createOnceSubsciber, createWatcher } from '../utils/helpers.js';
 
   const dispatch = createEventDispatcher();
 
   export let key = '';
+  const issueSub = createOnceSubsciber();
+  const watchKey = createWatcher(key);
 
+  let issue;
+  
   const prevKey = '';
-
   $: {
-    if (key && prevKey !== key) {
-      issuePool.addByKey(key);
-    }
+    watchKey.onChanged(key, () => {
+      if (key) {
+        issuePool.addByKey(key);
+        issue = issuePool.getByKey(key);
+        issueSub.subscribe(issue, issueData => {
+          dispatch('jira-issue-loaded', issueData);
+        });
+      }
+    });
   }
-
-  let issue = emptyIssue;
-
-  const load = () => {
-    issue = issuePool.getByKey(key);
-    dispatch('jira-issue-loaded', issue);
-  }
-
-  issuePool.subscribe(pool => {
-    load();
-  });
-
-  isAuthenticated.subscribe(v => {
-    if (v) {
-      load();
-    } else {
-      issue = emptyIssue;
-      dispatch('jira-issue-loaded', issue);
-    }
-  });
 </script>
 
 <svelte:options tag="jira-issue"/>

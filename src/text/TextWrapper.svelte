@@ -17,15 +17,9 @@
   }
 </script>
 
-<style>
-  .jira-text--original {
-    display: none;
-  }
-</style>
-
 <svelte:options tag="jira-text-wrapper" />
 
-<div class="jira-text--original">
+<div style="display: none">
   <slot on:slotchange={processSlot}></slot>
 </div>
 <div class="jira--text">

@@ -1,14 +1,11 @@
 import { writable, get } from 'svelte/store';
-import { fetchAllPages, tick } from '../utils/api.js';
+import { fetchAllPages } from '../utils/api.js';
 import { isAuthenticated } from '../auth/store.js';
+import { Pool } from '../utils/pool.js';
 
 const fetchProjects = async () => {
-  await tick(100);
   try {
-    projectPool.reset();
-    projectsAreFetchig.set(true);
     const pages = await fetchAllPages(`/rest/api/3/project/search?orderBy=+key&startAt=%start%&maxResults=%max%`, 50);
-    projectsAreFetchig.set(false);
     const values = pages.reduce((acc, page) => [...acc, ...page.values], []);
     const projects = values.map((_project) => {
       const { id, key, name, isPrivate, avatarUrls, self } = _project;
@@ -20,44 +17,28 @@ const fetchProjects = async () => {
       };
       return project;
     });
-    projectPool.set(projects);
     return Promise.resolve(projects);
-
   } catch(error) {
-    projectsAreFetchig.set(false);
     return Promise.reject(error);
   }
 };
 
-const addToPool = (pool, project) => {
-  const ret = [...pool];
-  const foundIndex = ret.findIndex((_project) => _project.key === project.key);
-  if (foundIndex > -1) {
-    ret[foundIndex] = project;
-  } else {
-    ret.push(project);
-  }
-  return ret;
+export const emptyProject = {
+  id: '',
+  key: '',
+  name: '',
+  isPrivate: false,
+  avatarUrl: '#',
+  url: '#',
+  data: null,
 }
 
-export let projectsAreFetchig = writable(false);
-
-export const projectPool = (() => {
-  const { subscribe, set, update } = writable([]);
-
-  return {
-    subscribe,
-    fetchAll: async () => {
-      return await fetchProjects();
-    },
-    set: (pool) => set(pool),
-    reset: () => set([]),
-    getByKey: (key) => get(projectPool).find(_project => _project.key === key),
-  };
-})();
+export const projectPool = new Pool(emptyProject, null, fetchProjects);
 
 isAuthenticated.subscribe((v) => {
   if (!v) {
-    projectPool.reset();
+    projectPool.kill();
+  } else {
+    projectPool.fetchAll();
   }
 });
