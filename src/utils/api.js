@@ -1,11 +1,13 @@
 import { get } from 'svelte/store';
 import { corsUrl } from '../global/store.js';
+import { email, apiKey, url as bUrl} from '../auth/store.js';
 import { readData } from './storage.js';
+
 
 const getHeaders = () => ({
   'accept': 'application/json',
   'aontent-type': 'application/json',
-  'authorization': `Basic ${btoa(readData('email')+':'+readData('apiKey'))}`,
+  'authorization': `Basic ${btoa(get(email)+':'+get(apiKey))}`,
 });
 
 export const tick = async (time) => (new Promise((resolve, reject) => { setTimeout(resolve, time); }));
@@ -15,8 +17,13 @@ export const fetchApi = async (url) => {
   if (!cUrl) {
     return Promise.reject('No CORS server URL specified!');
   }
-  const baseUrl = readData('url');
-  if (!baseUrl || !url) {
+  
+  const baseUrl = get(bUrl);
+  if (!bUrl || ! get(email) || !get(apiKey)) {
+    return Promise.reject('Not authenticated!');
+  }
+  
+  if (!url) {
     return Promise.reject('No URL specified!');
   }
   try {

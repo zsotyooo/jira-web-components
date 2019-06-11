@@ -1,4 +1,5 @@
 import { writable, get } from 'svelte/store';
+import { isSafe } from '../global/store.js';
 
 const storageKey = (key) => `__jira-${key}`;
 
@@ -7,11 +8,14 @@ export const hydrateData = (key, value) => localStorage.setItem(storageKey(key),
 export const deleteData = (key) => localStorage.removeItem(storageKey(key));
 
 export const createSavedStoreFor = (key) => {
-  const store = writable(readData(key));
+  const _isSafe = get(isSafe);
+  const store = writable(_isSafe ? (readData(key) || '') : '');
 
-  store.subscribe(v => {
-    hydrateData(key, v)
-  });
+  if (_isSafe) {
+    store.subscribe(v => {
+      hydrateData(key, v)
+    });
+  }
 
   return store;
 }

@@ -12,6 +12,7 @@ const fetchAuthUser = async () => {
       authUser.set({ accountId, key, name, emailAddress, displayName, avatar: avatarUrls['48x48'] });
       authUserIsFetching.set(false);
     } catch(error) {
+      console.warn(`Authentication error: ${error}`);
       authUser.set(emptyUser);
       authUserIsFetching.set(false);
     }

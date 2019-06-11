@@ -22,7 +22,7 @@ import "jira-web-components";
 Or use a `script` tag...
 
 ```html
-<script src="https://unpkg.com/jira-web-components@0.5.0/public/bundle.js"></script>
+<script src="https://unpkg.com/jira-web-components@0.7.0/public/bundle.js"></script>
 ```
 
 In order to be able to communicate with JIRA you need a CORS proxy server.
@@ -86,11 +86,14 @@ For testing only you can also use: `https://cors-anywhere.herokuapp.com`
 
 You have to have it somewhere on the top of the HTML code.
 
-You also have to specify your CORS proxy server URL by setting the `cors` param.
-
 ```html
-<jira-global-config cors="http://localhost:4444"></jira-global-config>
+<jira-global-config cors="http://localhost:4444" safe="true"></jira-global-config>
 ```
+
+Parameters:
+
+* `cors`: the cors server URL (see details above)
+* `safe`: If `false` it saves the email, api key, and url in the local storage. It's only recommended to use it if you have only one user. A safer way is to set it true and store this information on a server. You can use the `<jira-auth>` components public methods to authenticate.
 
 ### Visual Components
 
@@ -221,7 +224,6 @@ Methods:
 Events:
 
 * `'jira-projects-loaded'`: {detail: `array`}
-* `'jira-projects-changed'`: {detail: `array`}
 * `'jira-projects-fetching-changed'`: {detail: `boolean`}
 
 ## Styleguide, examples and detailed documentation:

@@ -1,13 +1,13 @@
 <script>
   import { onMount, tick } from'svelte';
-  import { corsUrl, userSecret } from './store.js';
+  import { corsUrl, isSafe } from './store.js';
   import { createWatcher } from '../utils/helpers.js';
 
   export let cors = null;
-  export let secret = null;
+  export let safe = false;
 
   const watchCors = createWatcher(cors);
-  const watchSecret = createWatcher(secret);
+  const watchSafe = createWatcher(safe);
 
   $: {
     watchCors.onChanged(cors, () => {
@@ -16,10 +16,8 @@
       }
     });
     
-    watchSecret.onChanged(secret, () => {
-      if (secret !== null) {
-        userSecret.set(secret);
-      }
+    watchSafe.onChanged(safe, () => {
+      isSafe.set(safe !== false && safe.toString().toLowerCase() !== 'false');
     });
   }
 </script>
