@@ -1,6 +1,6 @@
 {
   "name": "jira-web-components",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "A web component library for JiRa",
   "module": "public/bundle.js",
   "main": "public/bundle.js",
