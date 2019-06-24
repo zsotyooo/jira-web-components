@@ -10,13 +10,11 @@ export const processText = (text) => {
 
 export const createOnceSubsciber = (() => {
   let unsub;
-  return {
-    subscribe: (target, fn) => {
-      if (unsub) {
-        unsub();
-      }
-      unsub = target.subscribe(fn);
+  return (target, fn) => {
+    if (unsub) {
+      unsub();
     }
+    unsub = target.subscribe(fn);
   }
 });
 

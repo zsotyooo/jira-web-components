@@ -1,30 +1,34 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { get } from 'svelte/store';
-  import { email, apiKey, url, authUser, authUserIsFetching } from './store.js';
+  import { auth } from './auth.js';
+  import { authUser } from './authUser.js';
 
   const dispatch = createEventDispatcher();
 
-  export let setEmail = (v) => email.set(v);
-  export let setApiKey = (v) => apiKey.set(v);
-  export let setUrl = (v) => url.set(v);
-  export let getUserData = () => get(authUser);
+  export let setEmail = (v) => auth.setEmail(v);
+  export let setApiKey = (v) => auth.setApiKey(v);
+  export let setUrl = (v) => auth.setUrl(v);
+  export let getUserData = () => authUser.getUserData();
 
-  export let getEmail = () => $email;
-  export let getApiKey = () => $apiKey;
-  export let getUrl = () => $url;
+  export let getEmail = () => auth.getEmail();
+  export let getApiKey = () => auth.getApiKey();
+  export let getUrl = () => auth.getUrl();
 
-  export let isAuthenticated = () => !!$authUser.accountId;
+  export let authenticate = async () => authUser.authenticate();
+
+  export let isAuthenticated = () => authUser.isAuthenticated;
+  export let isFetching = () => authUser.isFetching;
 
   authUser.subscribe(user => {
     dispatch('jira-auth-user-changed', user);
     dispatch('jira-auth-status-changed', !!user.accountId);
   });
 
-  authUserIsFetching.subscribe(v => dispatch('jira-auth-user-fetching-changed', v));
-  email.subscribe(v => dispatch('jira-auth-email-changed', v));
-  apiKey.subscribe(v => dispatch('jira-auth-apikey-changed', v));
-  url.subscribe(v => dispatch('jira-auth-url-changed', v));
+  authUser.fetching.subscribe(fetching => dispatch('jira-auth-user-fetching-changed', fetching));
+  auth.email.subscribe(email => dispatch('jira-auth-email-changed', email));
+  auth.apiKey.subscribe(apiKey => dispatch('jira-auth-apikey-changed', apiKey));
+  auth.url.subscribe(url => dispatch('jira-auth-url-changed', url));
 
   export let reset = () => {
     setEmail('');

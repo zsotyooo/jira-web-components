@@ -1,12 +1,20 @@
-<jira-project-select id="jira-project-select"></jira-project-select>
+<jira-project-select selected="{{selected}}" id="jira-project-select">
+  {% if hasCard %}
+    <hr>
+    {%render "@project-card", {key: selected, id: false} %}
+  {% endif %}
+  {% if hasBoard %}
+    <hr>
+    {% render '@board-select', { project: '', hasPanel: true } %}
+  {% endif %}
+</jira-project-select>
 
 <script>
-  var projectSelect = document.getElementById('jira-project-select');
-
   addEventListener('DOMContentLoaded', function() {
+    var projectSelect = document.getElementById('jira-project-select');
     projectSelect.$on('jira-project-selected', function (e) {
-      console.log(e.detail)
+      console.log(e.detail);
+      console.log(projectSelect.getProject());
     });
   });
-  
 </script>

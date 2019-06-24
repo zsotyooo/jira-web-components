@@ -7,6 +7,9 @@ import IssueTag from './issue/IssueTag.svelte';
 import Projects from './project/Projects.svelte';
 import ProjectSelect from './project/ProjectSelect.svelte';
 import ProjectCard from './project/ProjectCard.svelte';
+import Boards from './board/Boards.svelte';
+import BoardSelect from './board/BoardSelect.svelte';
+import BoardPanel from './board/BoardPanel.svelte';
 import TextWrapper from './text/TextWrapper.svelte';
 
 export default {
@@ -18,6 +21,9 @@ export default {
   Projects,
   ProjectSelect,
   ProjectCard,
+  Boards,
+  BoardSelect,
+  BoardPanel,
   TextWrapper,
   Config,
 }

@@ -11,7 +11,7 @@
 </head>
 <body>
   <jira-global-config
-  cors="https://cors-anywhere.herokuapp.com"
+  cors="http://localhost:4444"
   safe="true"></jira-global-config>
 
   <jira-projects id="jira-projects"></jira-projects>
@@ -19,14 +19,14 @@
 <script>
   addEventListener('DOMContentLoaded', function() {
     var projects = document.getElementById('jira-projects');
-    console.log(projects);
     
-    projects.$on('jira-projects-changed', function (e) {
-      console.log(e.detail)
+    projects.$on('jira-projects-loaded', function (e) {
+      console.log('getProjects', projects.getProjects(), e.detail)
+      console.log('getProject', projects.getProject('SCS'));
     });
 
     projects.$on('jira-projects-fetching-changed', function (e) {
-      console.log(e.detail);
+      console.log('fetching', e.detail);
     });
   });
   

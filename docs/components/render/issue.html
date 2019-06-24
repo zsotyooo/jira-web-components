@@ -1,0 +1,15 @@
+
+
+<jira-issue key="REISS-30" id="jira-issue"></jira-issue>
+<script>
+  addEventListener('DOMContentLoaded', function() {
+    issue = document.getElementById('jira-issue');
+    issue.$on('jira-issue-loaded', function (e) {
+      console.log(issue.getIssue(), e.detail);
+    });
+    issue.$on('jira-issue-fetching-changed', function (e) {
+      console.log(e.detail);
+    });
+  });
+  
+</script>

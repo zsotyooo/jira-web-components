@@ -3,5 +3,6 @@ module.exports = {
   title: "Project Card",
   context: {
     key: 'OLP',
+    id: 'jira-project-card',
   },
 }

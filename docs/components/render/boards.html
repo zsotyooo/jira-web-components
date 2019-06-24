@@ -1,0 +1,15 @@
+
+
+<jira-boards project="SCS" id="jira-boards"></jira-boards>
+
+<script>
+  addEventListener('DOMContentLoaded', function() {
+    var boards = document.getElementById('jira-boards');
+    console.log(boards);
+    
+    boards.$on('jira-boards-loaded', function (e) {
+      console.log('getBoards', boards.getBoards(), e.detail);
+    });
+  });
+  
+</script>

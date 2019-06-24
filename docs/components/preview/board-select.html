@@ -1,0 +1,38 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel='stylesheet' href='../../global.css'>
+  <link rel='stylesheet' href='../../bundle.css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css" />
+  <title>Preview Layout</title>
+</head>
+<body>
+  <jira-global-config
+  cors="http://localhost:4444"
+  safe="true"></jira-global-config>
+
+  <jira-board-select project="SCS"  selected="" id="jira-board-select">
+  
+    <hr>
+    <jira-board-panel bid="" id="jira-board-panel"></jira-board-panel>
+
+  
+</jira-board-select>
+
+<script>
+  addEventListener('DOMContentLoaded', function() {
+    var boardSelect = document.getElementById('jira-board-select');
+    boardSelect.$on('jira-board-selected', function (e) {
+      console.log(e.detail);
+      console.log(boardSelect.getBoard());
+    });
+  });
+  
+</script>
+  
+  <script type="text/javascript" src="../../bundle.js"></script>
+</body>
+</html>

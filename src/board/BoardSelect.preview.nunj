@@ -1,0 +1,17 @@
+<jira-board-select project="{{ project }}"  selected="{{selected}}" id="jira-board-select">
+  {% if hasPanel %}
+    <hr>
+    {%render "@board-panel", {project: project, id: ''} %}
+  {% endif %}
+</jira-board-select>
+
+<script>
+  addEventListener('DOMContentLoaded', function() {
+    var boardSelect = document.getElementById('jira-board-select');
+    boardSelect.$on('jira-board-selected', function (e) {
+      console.log(e.detail);
+      console.log(boardSelect.getBoard());
+    });
+  });
+  
+</script>

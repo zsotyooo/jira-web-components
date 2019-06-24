@@ -1,26 +1,19 @@
 <script>
-  import { createEventDispatcher, onMount, tick } from 'svelte';
-  import { get } from 'svelte/store';
-  import { isAuthenticated } from '../auth/store.js';
-  import { projectPool } from './store.js';
+  import { createEventDispatcher } from 'svelte';
+  import { projects } from './project.js';
   const dispatch = createEventDispatcher();
 
-  export let fetchProjects = async () => {
-    const data = await projectPool.fetchAll();
-    return data;
-  };
+  export let fetchProjects = async () => await projects.fetchAll();
 
-  export let getProjects = get(projectPool);
-  export let getProject = (key) => {
-    return projectPool.getByKey(key);
-  };
+  export let getProjects = () => projects.getProjectArray();
+  export let getProject = (key) => projects.getItemData(key);
 
-  projectPool.subscribe((projects) => {
-    dispatch('jira-projects-loaded', projects);
+  projects.loaded.subscribe(_loaded => {
+    dispatch('jira-projects-loaded', _loaded);
   });
 
-  projectPool.getIsFetching().subscribe((fetching) => {
-    dispatch('jira-projects-fetching-changed', fetching);
+  projects.fetching.subscribe(_fetching => {
+    dispatch('jira-projects-fetching-changed', _fetching);
   });
 </script>
 

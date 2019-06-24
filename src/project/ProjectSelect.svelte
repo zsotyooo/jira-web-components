@@ -1,64 +1,103 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import { get } from 'svelte/store';
   import { createWatcher } from '../utils/helpers.js';
-  import Projects from './Projects.svelte';
+  import { projects } from './project.js';
 
   const dispatch = createEventDispatcher();
 
+  export let selected = '';
+  const watchSelected = createWatcher(selected);
+
   export let getProject = () => project;
 
-  let projects;
-  let projectsComponent;
-  const watchProjects = createWatcher(projects);
-  let isFetching = false;
+  let project = null;
+  let projectList = null;
+  let fetching;
+  let ok;
+  let slot;
 
-  function onProjectsLoaded({ detail }) {
-    projects = detail.map(p => get(p));
+  let unsubs = [];
+
+  projects.data.subscribe(_projectsData => projectList = projects.getProjectArray());
+  projects.ok.subscribe(_ok => ok = _ok);
+  projects.fetching.subscribe(_fetching => fetching = _fetching);
+
+  $: {
+    watchSelected.onChanged(selected, () => {
+      unsubs.map(unsub => unsub());
+      if (selected) {
+        unsubs = [
+          projects.getItem(selected).subscribe(_projectsData => project = projects.getItemData(selected)),
+        ];
+      } else {
+        project = null;
+      }
+      assignNodes();
+      dispatch('jira-project-selected', project);
+    });
+  }
+
+  const assignNodes = () => {
+    slot.assignedNodes().map(el => {
+      if (el.nodeType === Node.ELEMENT_NODE) {
+        switch (el.tagName) {
+          case 'JIRA-PROJECT-CARD':
+            el.setAttribute('key', selected);
+          break;
+          case 'JIRA-BOARD-SELECT':
+            el.setAttribute('project', selected);
+            el.setAttribute('selected', '');
+          break;
+        }
+      }
+    });
   };
 
-  function onFetchingChanged({ detail }) {
-    isFetching = detail;
+  const onSlotChange = () => {
+    assignNodes();
   };
 
   const onSelect = ({ target: { value }}) => {
-    const key = value;
-    let project = null;
-    if (key) {
-      project = get(projectsComponent.getProject(key));
-    }
-    dispatch('jira-project-selected', project);
-  }
+    selected = value;
+  };
 </script>
 
 <style lang="sass">
   @import "node_modules/bulma/bulma";
-  .jira-project-select.control .select {
-    width: 100%;
-    max-width: 300px;
-    select {
-      width: 100%;
+  @keyframes borderAnim {
+    0% {
+      box-shadow: inset 0px 0px 1px whitesmoke;
     }
+    100% {
+      box-shadow: inset 0px 0px 3px 3px #ffdd57;;
+    }
+  }
+  .select.is-loading-bg select {
+    animation: borderAnim 0.5s ease-in-out infinite alternate;
+  }
+  :host {
+    width: 100%;
   }
 </style>
 
 <svelte:options tag="jira-project-select" />
 
-<Projects 
-  bind:this={projectsComponent}
-  on:jira-projects-loaded={onProjectsLoaded}
-  on:jira-projects-fetching-changed={onFetchingChanged}/>
-
-<div class="control jira-project-select container is-fluid">
-  <div class="select"
-    class:is-loading={isFetching} >
-    <select on:change={onSelect}>
-      <option value="">Please select project</option>
-      {#if projects}
-        {#each projects as { id, key, name }, i}
-          <option value={key}>{key}: { name}</option>
-        {/each}
-      {/if}
-    </select>
+<div class="box container is-fluid">
+  <div class="field is-horizontal">
+    <label class="label field-label">Project:</label>
+    <div class="control field-body jira-project-select">
+      <div class="select"
+        class:is-loading-bg={fetching} >
+        <select on:change={onSelect}>
+          <option value="">Please select project</option>
+          {#if projectList}
+            {#each projectList as { id, key, name }, i}
+              <option value={key} selected={selected === key}>{key}: { name}</option>
+            {/each}
+          {/if}
+        </select>
+      </div>
+    </div>
   </div>
+  <slot on:slotchange={onSlotChange} bind:this={slot}></slot>
 </div>

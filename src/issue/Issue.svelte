@@ -1,25 +1,25 @@
 <script>
-  import { createEventDispatcher, onMount, tick } from 'svelte';
-  import { issuePool } from './store.js';
-  import { createOnceSubsciber, createWatcher } from '../utils/helpers.js';
-
+  import { createEventDispatcher } from 'svelte';
+  import { issues } from './issue.js';
+  import { createWatcher } from '../utils/helpers.js';
   const dispatch = createEventDispatcher();
 
-  export let key = '';
-  const issueSub = createOnceSubsciber();
+  export let key;
   const watchKey = createWatcher(key);
 
-  let issue;
-  
-  const prevKey = '';
+  export let getIssue = () => issues.getItemData(key);
+
+  let unsubs = [];
+
   $: {
     watchKey.onChanged(key, () => {
       if (key) {
-        issuePool.addByKey(key);
-        issue = issuePool.getByKey(key);
-        issueSub.subscribe(issue, issueData => {
-          dispatch('jira-issue-loaded', issueData);
-        });
+        const _issue = issues.setItem(key);
+        unsubs.map(unsub => unsub());
+        unsubs = [
+          _issue.loaded.subscribe(_loaded => dispatch('jira-issue-loaded', _loaded)),
+          _issue.fetching.subscribe(_fetching => dispatch('jira-issue-fetching-changed', _fetching)),
+        ];
       }
     });
   }

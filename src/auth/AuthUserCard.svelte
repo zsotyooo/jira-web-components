@@ -1,56 +1,67 @@
 <script>
-  import { emptyUser } from './store.js';
-  import Auth from './Auth.svelte';
+  import { authUser } from './authUser.js';
 
-  let authComponent;
-  let fetching = false;
-  let user = emptyUser;
+  let fetching;
+  let user;
+  let authenticated;
 
-  function onIsFechingChanged(e) {
-    fetching = e.detail;
-  }
+  authUser.subscribe(_user => {
+    user = _user;
+  });
 
-  function onUserChanged(e) {
-    user = e.detail;
-  }
+  authUser.fetching.subscribe(_fetching => {
+    fetching = _fetching;
+  });
+
+  authUser.authenticated.subscribe(_authenticated => {
+    authenticated = _authenticated;
+  });
+
 </script>
 
 <style lang="sass">
   @import "node_modules/bulma/bulma";
+  @keyframes borderAnim {
+    0% {
+      box-shadow: inset 0px 0px 1px whitesmoke;
+    }
+    100% {
+      box-shadow: inset 0px 0px 50px 50px #ffdd57;;
+    }
+  }
+  .authuser-card.is-loading {
+    animation: borderAnim 0.5s ease-in-out infinite alternate;
+  }
 </style>
 
-<svelte:options tag="jira-auth-user-card"/>
+<svelte:options tag="jira-auth-user-card" />
 
-<Auth
-  bind:this={authComponent}
-  on:jira-auth-user-changed={onUserChanged}
-  on:jira-auth-user-fetching-changed={onIsFechingChanged} />
-
-{#if fetching }
-  <p class="box container is-fluid notification is-warning">
-    <button class="button is-warning is-loading is-small"></button>
-  </p>
-{:else if user.accountId }
-  <div class="box container is-fluid">
-    <article class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img src={user.avatar} alt="Image">
-        </figure>
-      </div>
-      <div class="media-content">
-        <div class="content">
+<div class="box container is-fluid authuser-card"
+  class:is-loading={fetching}>
+  <article class="media">
+    <div class="media-left">
+      <figure class="image is-48x48">
+        <img src={user.avatarUrls['48x48']} alt="">
+      </figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        {#if authenticated }
           <p>
             <strong>{user.displayName}</strong> <small>@{user.name}</small>
             <br>
             <small>{user.emailAddress}</small>
           </p>
-        </div>
+        {:else}
+          <p>
+            <strong>
+              You are not logged in.
+            </strong>
+            <br>
+            <small>Please log in with an <a target="_blank" href="https://id.atlassian.com/manage/api-tokens">API key</a>.</small>
+          </p>
+        {/if}
       </div>
-    </article>
-  </div>
-{:else}
-  <div class="notification is-warning">
-    You are not logged in!
-  </div>
-{/if}
+    </div>
+  </article>
+</div>

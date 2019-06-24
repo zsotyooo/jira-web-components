@@ -1,1 +1,1 @@
-<jira-project-card key="{{ key }}" id="jira-project-card"></jira-project-card>
+<jira-project-card key="{{ key }}" {% if id %}id="{{id}}"{% endif %}></jira-project-card>

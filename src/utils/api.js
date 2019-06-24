@@ -1,36 +1,44 @@
-import { get } from 'svelte/store';
-import { corsUrl } from '../global/store.js';
-import { email, apiKey, url as bUrl} from '../auth/store.js';
-import { readData } from './storage.js';
-
+import { config } from '../global/global-config.js';
+import { auth } from '../auth/auth.js';
 
 const getHeaders = () => ({
   'accept': 'application/json',
   'aontent-type': 'application/json',
-  'authorization': `Basic ${btoa(get(email)+':'+get(apiKey))}`,
+  'authorization': `Basic ${btoa(auth.getEmail()+':'+auth.getApiKey())}`,
 });
 
 export const tick = async (time) => (new Promise((resolve, reject) => { setTimeout(resolve, time); }));
 
 export const fetchApi = async (url) => {
-  const cUrl = get(corsUrl);
+  const cUrl = config.getCorsUrl();
   if (!cUrl) {
     return Promise.reject('No CORS server URL specified!');
   }
   
-  const baseUrl = get(bUrl);
-  if (!bUrl || ! get(email) || !get(apiKey)) {
-    return Promise.reject('Not authenticated!');
+  const baseUrl = auth.getUrl();
+  if (!baseUrl || !auth.getEmail() || !auth.getApiKey()) {
+    console.warn('Not authenticated!');
+    return Promise.reject();
   }
   
   if (!url) {
-    return Promise.reject('No URL specified!');
+    console.warn('No URL specified!');
+    return Promise.reject();
   }
   try {
     const rawResponse = await fetch(`${cUrl}/${baseUrl}${url}`, {
       method: 'GET',
       headers: getHeaders()
     });
+    if (!rawResponse || !rawResponse.ok) {
+      let error = rawResponse;
+      let status = '';
+      if ((typeof rawResponse['ok']) !== 'undefined') {
+        error = await rawResponse.json();
+        status = rawResponse.status;
+      }
+      return Promise.reject(error);
+    }
     const content = await rawResponse.json();
     return Promise.resolve(content);
   } catch(error) {

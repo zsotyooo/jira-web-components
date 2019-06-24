@@ -161,7 +161,7 @@
     
     <div class="Browser-panel Browser-code" data-role="tab-panel" id="browser-7553b0d9ab9a5cc33943e4031c7d6972-panel-view">
     <code class="Code Code--lang-text">
-        <pre><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">jira-project-card</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"</span></span></span><span class="hljs-template-variable">{{ key }}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"jira-project-card"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-project-card</span>&gt;</span></span></pre>
+        <pre><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">jira-project-card</span> <span class="hljs-attr">key</span>=<span class="hljs-string">"</span></span></span><span class="hljs-template-variable">{{ key }}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span> </span></span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">if</span></span> id %}</span><span class="xml"><span class="hljs-tag"><span class="hljs-attr">id</span>=<span class="hljs-string">"</span></span></span><span class="hljs-template-variable">{{id}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span></span></span><span class="hljs-template-tag">{% <span class="hljs-name"><span class="hljs-name">endif</span></span> %}</span><span class="xml"><span class="hljs-tag">&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">jira-project-card</span>&gt;</span></span></pre>
     </code>
 </div>
 
@@ -171,7 +171,8 @@
         
             
             <pre>{
-  <span class="hljs-attr">"key"</span>: <span class="hljs-string">"OLP"</span>
+  <span class="hljs-attr">"key"</span>: <span class="hljs-string">"OLP"</span>,
+  <span class="hljs-attr">"id"</span>: <span class="hljs-string">"jira-project-card"</span>
 }</pre>
             
         
@@ -223,7 +224,7 @@
             <strong class="Meta-key">Referenced by <em class="Meta-count">(1)</em>:</strong>
             <span class="Meta-value Meta-value--linkList">
             
-                <a href="all-components.html">@<span>all-components</span></a>
+                <a href="project-select.html">@<span>project-select</span></a>
             
             </span>
         </li>
@@ -381,6 +382,94 @@
         
     
         
+        <li class="Tree-item Tree-collection Tree-depth-2" data-behaviour="collection" id="tree-components-collection-board">
+            <h4 class="Tree-collectionLabel" data-role="toggle">
+                <span>Board</span>
+            </h4>
+            <ul class="Tree-collectionItems" data-role="items">
+            
+            
+            
+            
+    
+        
+        
+        <li class="Tree-item Tree-entity" data-role="item">
+            <a class="Tree-entityLink" href="board-panel.html" data-pjax>
+                <span>Board Panel</span>
+                
+
+<div class="Status Status--unlabelled">
+
+<div class="Status-dots">
+
+
+<span class="Status-dot" style="border-color: #29CC29;" title="Ready"></span>
+
+
+</div>
+
+</div>
+
+
+            </a>
+        </li>
+        
+    
+        
+        
+        <li class="Tree-item Tree-entity" data-role="item">
+            <a class="Tree-entityLink" href="board-select.html" data-pjax>
+                <span>Board Select</span>
+                
+
+<div class="Status Status--unlabelled">
+
+<div class="Status-dots">
+
+
+<span class="Status-dot" style="border-color: #29CC29;" title="Ready"></span>
+
+
+</div>
+
+</div>
+
+
+            </a>
+        </li>
+        
+    
+        
+        
+        <li class="Tree-item Tree-entity" data-role="item">
+            <a class="Tree-entityLink" href="boards.html" data-pjax>
+                <span>Boards</span>
+                
+
+<div class="Status Status--unlabelled">
+
+<div class="Status-dots">
+
+
+<span class="Status-dot" style="border-color: #29CC29;" title="Ready"></span>
+
+
+</div>
+
+</div>
+
+
+            </a>
+        </li>
+        
+    
+
+            </ul>
+        </li>
+        
+    
+        
         <li class="Tree-item Tree-collection Tree-depth-2" data-behaviour="collection" id="tree-components-collection-global">
             <h4 class="Tree-collectionLabel" data-role="toggle">
                 <span>Global</span>
@@ -430,6 +519,30 @@
             
             
             
+    
+        
+        
+        <li class="Tree-item Tree-entity" data-role="item">
+            <a class="Tree-entityLink" href="issue.html" data-pjax>
+                <span>Issue</span>
+                
+
+<div class="Status Status--unlabelled">
+
+<div class="Status-dots">
+
+
+<span class="Status-dot" style="border-color: #29CC29;" title="Ready"></span>
+
+
+</div>
+
+</div>
+
+
+            </a>
+        </li>
+        
     
         
         

@@ -1,39 +1,10 @@
 
 
-<jira-global-config
-  cors="https://cors-anywhere.herokuapp.com"
-  safe="true"></jira-global-config>
 <jira-auth-user-card></jira-auth-user-card>
 
 <hr>
 <jira-auth-form></jira-auth-form>
 
-<hr>
-<div class="box container is-fluid">
-  <jira-project-select id="jira-project-select"></jira-project-select>
-
-<script>
-  var projectSelect = document.getElementById('jira-project-select');
-
-  addEventListener('DOMContentLoaded', function() {
-    projectSelect.$on('jira-project-selected', function (e) {
-      console.log(e.detail)
-    });
-  });
-  
-</script>
-  <hr>
-  <jira-project-card key="" id="jira-project-card"></jira-project-card>
-
-  <script>
-    addEventListener('DOMContentLoaded', function() {
-      var projectSelect = document.getElementById('jira-project-select');
-      projectSelect.$on('jira-project-selected', function (e) {
-        document.getElementById('jira-project-card').setAttribute('key', e.detail.key);
-      });
-    });
-  </script>
-</div>
 <hr>
 <div class="box container is-fluid">
   <strong>Ticket:</strong>
@@ -47,4 +18,16 @@
   <p>Lorem ipsum [JIRA:KITT-100] dolor sit [JIRA:SCS-111] amet</p>
 </jira-text-wrapper>
 </div>
+
 <hr>
+
+
+<jira-project-select>
+    <hr>
+    <jira-project-card></jira-project-card> <!-- the project card will always show the selected project -->
+    <hr>
+    <jira-board-select>  <!-- the board select will always list the boards for the selected project -->
+        <hr>
+        <jira-board-panel></jira-board-panel> <!-- the board panel will always show the details for the selected board -->
+    </jira-board-select>
+</jira-project-select>

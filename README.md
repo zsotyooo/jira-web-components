@@ -22,7 +22,7 @@ import "jira-web-components";
 Or use a `script` tag...
 
 ```html
-<script src="https://unpkg.com/jira-web-components@0.7.0/public/bundle.js"></script>
+<script src="https://unpkg.com/jira-web-components@0.8.0/public/bundle.js"></script>
 ```
 
 In order to be able to communicate with JIRA you need a CORS proxy server.
@@ -129,10 +129,35 @@ These components render actual content (see functional components later).
 <jira-project-select key="EX"></jira-project-select>
 ```
 
+Methods:
+
+* `getProject` = () => `object`;
+
 Events:
 
 * `'jira-project-selected'`: {detail: `object`}
 
+#### Project Board Dropdown
+
+```html
+<jira-board-select project="EX" selected="123"></jira-board-select>
+```
+
+Methods:
+
+* `getBoard` = () => `object`;
+
+Events:
+
+* `'jira-board-selected'`: {detail: `object`}
+
+#### Project Board Panel
+
+Shows board info with the given board id, and columns. (Recommended to use it in combination with the board select component)
+
+```html
+<jira-board-panel bid="123"></jira-board-panel>
+```
 
 #### Text wrapper
 
@@ -143,6 +168,22 @@ Replaces the `[JIRA:EX-123]` issue ticket codes with `<jira-issue>` components.
     Lorem ipsum [JIRA:EX-123] dolor sit [JIRA:EX-456] amet.
     <p>Lorem ipsum [JIRA:EX-123] dolor sit [JIRA:EX-456] amet.</p>
 </jira-text-wrapper>
+```
+
+### Combining Components
+
+Some of the components can be combined. You can see a full example of these combinations here.
+
+```html
+<jira-project-select>
+    <hr>
+    <jira-project-card></jira-project-card> <!-- the project card will always show the selected project -->
+    <hr>
+    <jira-board-select>  <!-- the board select will always list the boards for the selected project -->
+        <hr>
+        <jira-board-panel></jira-board-panel> <!-- the board panel will always show the details for the selected board -->
+    </jira-board-select>
+</jira-project-select>
 ```
 
 ### Functional Components
@@ -204,9 +245,13 @@ You can get info about an issue by using this component.
 <jira-issue key="EX-123"></jira-issue>
 ```
 
+Methods:
+
+* `getIssue` = () => `object`;
+
 Events:
 
-* `'jira-issue-loaded'`: {detail: `object`}
+* `'jira-issue-loaded'`: {detail: `boolean`}
 
 #### Projects
 
@@ -223,8 +268,27 @@ Methods:
 
 Events:
 
-* `'jira-projects-loaded'`: {detail: `array`}
+* `'jira-projects-loaded'`: {detail: `boolean`}
 * `'jira-projects-fetching-changed'`: {detail: `boolean`}
+
+#### Project Boards
+
+You can get the all available boards for a project.
+
+```html
+<jira-boards project="EX"></jira-projects>
+```
+
+Methods:
+
+* `serProject` = () => void;
+* `fetchBoards` = async () => Promise<`array`>;
+* `getBoards` = () => `array`;
+
+Events:
+
+* `'jira-boards-loaded'`: {detail: `boolean`}
+* `'jira-boards-fetching-changed'`: {detail: `boolean`}
 
 ## Styleguide, examples and detailed documentation:
 

@@ -1,0 +1,20 @@
+
+
+<jira-board-select project="SCS"  selected="" id="jira-board-select">
+  
+    <hr>
+    <jira-board-panel bid="" id="jira-board-panel"></jira-board-panel>
+
+  
+</jira-board-select>
+
+<script>
+  addEventListener('DOMContentLoaded', function() {
+    var boardSelect = document.getElementById('jira-board-select');
+    boardSelect.$on('jira-board-selected', function (e) {
+      console.log(e.detail);
+      console.log(boardSelect.getBoard());
+    });
+  });
+  
+</script>
