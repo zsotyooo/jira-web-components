@@ -204,6 +204,7 @@ Example:
     auth.setEmail('me@my-company.com');
     auth.setApiKey('[MY_API_KEY_FOR_JIRA]');
     auth.setUrl('https://my-company.atlassian.net');
+    auth.authenticate();
   });
 </script>
 ```
@@ -225,6 +226,7 @@ Methods:
 * `getEmail` = () => `string`;
 * `getApiKey` = () => `string`;
 * `getUrl` = () => `string`;
+* `authenticate` = async () => `void`;
 * `isAuthenticated` = () => `boolean`;
 * `reset` = () => `void`;
 
