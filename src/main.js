@@ -10,6 +10,7 @@ import ProjectCard from './project/ProjectCard.svelte';
 import Boards from './board/Boards.svelte';
 import BoardSelect from './board/BoardSelect.svelte';
 import BoardPanel from './board/BoardPanel.svelte';
+import StatusTag from './status/StatusTag.svelte';
 import TextWrapper from './text/TextWrapper.svelte';
 
 export default {
@@ -24,6 +25,7 @@ export default {
   Boards,
   BoardSelect,
   BoardPanel,
+  StatusTag,
   TextWrapper,
   Config,
 }

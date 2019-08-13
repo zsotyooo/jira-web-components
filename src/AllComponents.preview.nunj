@@ -19,6 +19,26 @@
     <hr>
     <jira-board-select>  <!-- the board select will always list the boards for the selected project -->
         <hr>
-        <jira-board-panel></jira-board-panel> <!-- the board panel will always show the details for the selected board -->
+        <div class="field is-horizontal">
+          <label class="label field-label">Selected statuses:</label>
+          <div class="control field-body">
+            <input class="input" type="text" id="statuses" /><button onclick="updateStatuses()" class="button is-primary">refresh</button>
+          </div>
+        </div>
+        <hr>
+        <jira-board-panel showstatuses="true" showcheckboxes="true" id="panel">
+        </jira-board-panel> <!-- the board panel will always show the details for the selected board -->
     </jira-board-select>
 </jira-project-select>
+
+<script>
+  var updateStatuses = () => {
+    document.getElementById('statuses').value = panel.getStatuses().filter(s => s.selected).map(s => s.name).join(',')
+  }
+  addEventListener('DOMContentLoaded', function() {
+    var panel = document.getElementById('panel');
+    panel.$on('jira-board-panel-status-selected', function({ detail }){
+      updateStatuses();
+    });
+  });
+</script> 

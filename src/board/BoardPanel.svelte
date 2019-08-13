@@ -1,9 +1,15 @@
 <script>
+  import { createEventDispatcher, onMount } from 'svelte';
   import { get } from 'svelte/store';
   import { createOnceSubsciber, createWatcher } from '../utils/helpers.js';
+  import StatusTag from '../status/StatusTag.svelte';
   import { getConfigForBoard } from './board.js';
 
+  const dispatch = createEventDispatcher();
+
   export let bid = '';
+  export let showstatuses = false;
+  export let showcheckboxes = false;
   let idWatcher = createWatcher(bid);
 
   let fetching;
@@ -12,6 +18,11 @@
 
   let config;
   let configData;
+
+  let statusTags = {};
+  let statusCheckboxes = {};
+
+  export let getStatuses = () => Object.keys(statusTags).filter(id => statusTags[id] !== null ).map(id => ({...statusTags[id].getStatus(), selected: statusCheckboxes[id].checked})).filter(s => s.ok);
 
   $: columns = configData && configData.columnConfig && configData.columnConfig.columns;
   $: name = configData && configData.name;
@@ -36,6 +47,15 @@
         loaded = false;
         configData = null;
       }
+    });
+  }
+
+  function handleStatusCbChange({ target }) {
+    const value = Number(target.value);
+    dispatch('jira-board-panel-status-selected', {
+      selected: target.checked,
+      value,
+      status: statusTags[value].getStatus(),
     });
   }
 </script>
@@ -66,6 +86,19 @@
             <div class="column is-one-quarter">
               <div class="notification has-background-grey-light">
                 <p><small><strong>{name}</strong></small></p>
+                {#if statuses && showstatuses }
+                  <ul>
+                    {#each statuses as { id }, i}
+                      <li>
+                        <jira-status-tag sid={id} bind:this={statusTags[id]}>
+                          {#if showcheckboxes}
+                            <input type="checkbox" checked="true" value={id} on:change={handleStatusCbChange}  bind:this={statusCheckboxes[id]}/>
+                          {/if}
+                        </jira-status-tag>
+                      </li>
+                    {/each}
+                  </ul>
+                {/if}
               </div>
             </div>
           {/each}
